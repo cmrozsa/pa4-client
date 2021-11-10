@@ -1,0 +1,61 @@
+.navbar {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100;
+  }
+  
+  .navbar li {
+    display: inline;
+    padding: 20px;
+  }
+  
+  .navbar a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  a.red {
+    color: red;
+    /* comment */
+  }
+  
+  .banner {
+    background-color: #660000;
+    color: white;
+    margin-top: 50px;
+    text-align: center;
+    padding: 100px 0;
+  }
+  
+  #small-bigAl {
+    height: 100px;
+  }
+  
+  #social {
+    color: #660000;
+    font-size: 100px;
+  }
+  
+  .social-section {
+    padding: 20px 50px;
+  }
+  
+  .bold {
+    font-weight: 900;
+  }
+  
+  #greet ul {
+    list-style-type: none;
+  }
+  
+  .avatar {
+    background-image: url("./images/BigAl2.jpg");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
