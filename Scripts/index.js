@@ -1,51 +1,104 @@
-// var tweets = ["Hey, it's Big Al", "Me again", "42-21!!"];
+//const url = "https://localhose:5001/api/posts";
+const url = "https://cmrozsa-pa4-bigaldatabase-api.herokuapp.com/api/posts";
 
-// setGreets = function()
-// {
-//     var html = "<ul>";
-//     tweets.forEach((tweet) => {    
-//         html += "<li><div class =\"avatar\"></div><spann>" + tweet + "</spann></li>";
-//     })
-//     html += "</ul>";
-//     document.getElementById("greets").innerHTML = html;
-// }
 
-// function handleOnLoad()
-// {
-//     setGreets();
-// }   
+setGreets = function(tweets)
+{
+    var html = "<ul>";
+    tweets.forEach((tweet) => {    
+        html += "<li><div class =\"avatar\"></div><spann>" + tweet.postText + "</spann></li>";
+        html += `<button onclick ="putPost(${tweet.postID})">Edit Post</button>`;
+        html += `<input type="text" name="post" id="edit${tweet.postID}" />`;
+        html += `<button onclick ="removePost(${tweet.postID})">Delete Post</button>`;
+        html += `<hr></hr>`;
+    })
+    html += "</ul>";
+    document.getElementById("greets").innerHTML = html;
+}
 
-// addPost() = function() 
-// {
-//     let postText = document.getElementById("post").value;
-//     tweets.push(postText);
-//     setGreets();
-// }
 
-// function handleOnSubmit(){
-//     addPost();
-// }
+function addPost()
+{
+    const postUrl = url;
+    let text = document.getElementById("post").value;
+    fetch(postUrl,{
+        method: "POST",
+        headers: {
+            "Accept": 'application/json',
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            Text: text
+        })
+    })
+    .then((response)=>{
+        console.log(response);
+        handleOnLoad();
+    })
+}
+    
+
+function handleOnSumbit(){
+    addPost();
+}
 function handleOnLoad(){
-    const postUrl = "https://localhose:5001/api/posts";
-    //const postUrl = "https://alumni-video-series-cmrozsa.herokuapp.com/api/person";
+    const postUrl = url;
 
     fetch(postUrl).then(function(response){
         return response.json();
     }).then(function(json){
         console.log(json);//this is the part that changes
-        displayTable(json);
+        setGreets(json);
     }).catch(function(error){
         console.log(error);
     })
 }
-//FOR EXAM!!! - first thing to do is to look at the json and make sure I understand it
 
-function displayTable(json){
-    var dataTable = document.getElementById("dataTable");
-    var html = "<table><tr><th>First Name</th><th>Last Name</th><th>City</th></tr>";
-    json.forEach(post => {
-        html+=`<tr><td>${post.id}</td><td>${post.post}</td><td>${post.date}</td></tr>`;
+// function displayTable(json){
+//     var dataTable = document.getElementById("dataTable");
+//     var html = "<table><tr><th>ID</th><th>Post</th><th>Date</th></tr>";
+//     json.forEach(post => {
+//         html+=`<tr><td>${post.postID}</td><td>${post.postText}</td><td>${post.date}</td></tr>`;
+//     })
+//     html+="</table>";
+//     dataTable.innerHTML = html;
+// }
+
+
+function putPost(postText){
+    const putPostApiUrl = url +"/"+postText;
+    const text = document.getElementById("edit"+postText).value;
+    console.log(postText)
+
+    fetch(putPostApiUrl,{
+        method: "PUT",
+        headers: {
+            "Accept": 'application/json',
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            Text: text
+        })
     })
-    html+="</table>";
-    dataTable.innerHTML = html;
+    .then((response)=>{
+        console.log(response);
+        handleOnLoad();
+    })
+}
+
+function removePost(postID){
+    const deletePostUrl = url+"/"+postID;
+
+    fetch(deletePostUrl,{
+        method: "DELETE",
+        headers: {
+            "Accept": 'application/json',
+            "Content-Type": 'application/json',
+        },
+    })
+    .then((response)=>{
+        console.log(response);
+        handleOnLoad();
+    })
+
 }

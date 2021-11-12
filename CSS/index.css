@@ -50,7 +50,7 @@
   }
   
   .avatar {
-    background-image: url("./images/BigAl2.jpg");
+    background-image: url("../images/BigAl2.jpg");
     background-size: cover;
     height: 50px;
     width: 50px;
