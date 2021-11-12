@@ -41,6 +41,7 @@ function addPost()
 function handleOnSumbit(){
     addPost();
 }
+
 function handleOnLoad(){
     const postUrl = url;
 
@@ -54,6 +55,7 @@ function handleOnLoad(){
     })
 }
 
+
 // function displayTable(json){
 //     var dataTable = document.getElementById("dataTable");
 //     var html = "<table><tr><th>ID</th><th>Post</th><th>Date</th></tr>";
@@ -65,10 +67,10 @@ function handleOnLoad(){
 // }
 
 
-function putPost(postText){
-    const putPostApiUrl = url +"/"+postText;
-    const text = document.getElementById("edit"+postText).value;
-    console.log(postText)
+function putPost(text){
+    const putPostApiUrl = url +"/"+text;
+    const postText = document.getElementById("edit"+text).value;
+    console.log(text)
 
     fetch(putPostApiUrl,{
         method: "PUT",
@@ -77,7 +79,7 @@ function putPost(postText){
             "Content-Type": 'application/json',
         },
         body: JSON.stringify({
-            Text: text
+            Text: postText
         })
     })
     .then((response)=>{
