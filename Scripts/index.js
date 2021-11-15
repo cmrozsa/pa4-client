@@ -1,5 +1,5 @@
-//const url = "https://localhost:5001/api/posts";
-const url = "https://cmrozsa-pa4-bigaldatabase-api.herokuapp.com/api/posts";
+const url = "https://localhost:5001/api/posts";
+//const url = "https://cmrozsa-pa4-bigaldatabase-api.herokuapp.com/api/posts";
 
 
 setGreets = function(tweets)
@@ -7,8 +7,8 @@ setGreets = function(tweets)
     var html = "<ul>";
     tweets.forEach((tweet) => {    
         html += "<li><div class =\"avatar\"></div><spann>" + tweet.postText + "</spann></li>";
-        html += `<button onclick ="putPost(${tweet.postID})">Edit Post</button>`;
         html += `<input type="text" name="post" id="edit${tweet.postID}" />`;
+        html += `<button onclick ="putPost(${tweet.postID})">Edit Post</button>`;
         html += `<button onclick ="removePost(${tweet.postID})">Delete Post</button>`;
         html += `<hr></hr>`;
     })
@@ -20,7 +20,9 @@ setGreets = function(tweets)
 function addPost()
 {
     const postUrl = url;
+    
     let text = document.getElementById("post").value;
+    console.log(text);
     fetch(postUrl,{
         method: "POST",
         headers: {
@@ -28,7 +30,9 @@ function addPost()
             "Content-Type": 'application/json',
         },
         body: JSON.stringify({
-            Text: text
+            PostText: text,
+            Date: new Date().toString(),
+            Deleted: 'N'
         })
     })
     .then((response)=>{
@@ -48,7 +52,7 @@ function handleOnLoad(){
     fetch(postUrl).then(function(response){
         return response.json();
     }).then(function(json){
-        console.log(json);//this is the part that changes
+        console.log(json);
         setGreets(json);
     }).catch(function(error){
         console.log(error);
@@ -56,20 +60,10 @@ function handleOnLoad(){
 }
 
 
-// function displayTable(json){
-//     var dataTable = document.getElementById("dataTable");
-//     var html = "<table><tr><th>ID</th><th>Post</th><th>Date</th></tr>";
-//     json.forEach(post => {
-//         html+=`<tr><td>${post.postID}</td><td>${post.postText}</td><td>${post.date}</td></tr>`;
-//     })
-//     html+="</table>";
-//     dataTable.innerHTML = html;
-// }
-
-
-function putPost(text){
-    const putPostApiUrl = url +"/"+text;
-    const postText = document.getElementById("edit"+text).value;
+function putPost(postID){
+    const putPostApiUrl = url +"/"+postID;
+    console.log(postID);
+    let text = document.getElementById("edit"+postID).value;
     console.log(text)
 
     fetch(putPostApiUrl,{
@@ -79,7 +73,7 @@ function putPost(text){
             "Content-Type": 'application/json',
         },
         body: JSON.stringify({
-            Text: postText
+            PostText: text
         })
     })
     .then((response)=>{
