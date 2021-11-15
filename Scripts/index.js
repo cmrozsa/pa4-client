@@ -1,5 +1,5 @@
-const url = "https://localhost:5001/api/posts";
-//const url = "https://cmrozsa-pa4-bigaldatabase-api.herokuapp.com/api/posts";
+//const url = "https://localhost:5001/api/posts";
+const url = "https://cmrozsa-pa4-bigaldatabase-api.herokuapp.com/api/posts";
 
 
 setGreets = function(tweets)
